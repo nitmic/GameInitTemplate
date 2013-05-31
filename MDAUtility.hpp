@@ -8,7 +8,6 @@
 *@return bool
 *@param p    : shared_ptr or weak_ptr, or they are wrapped by vector.
         func : When IModel::isValid return true, it is called.
-
 */
 template<class T>
 bool isValid(T & p){
@@ -117,7 +116,9 @@ void isAliveOrErase(std::vector<T> & v, std::function<void(typename toShared<T>:
 	isTrueOrErase(v, func, &IAgent::isAlive);
 }
 
-
+/**
+*@brief IAgent::step用ラッパー関数
+*/
 template<class T>
 void stepping_imp(T & p){
 	p->step();
@@ -134,6 +135,9 @@ void stepping(std::vector<T> & v){
 }
 
 
+/**
+*@brief IDrawer::draw用ラッパー関数
+*/
 template<class T>
 void drawing_imp(T & p){
 	p->draw();

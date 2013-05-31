@@ -1,6 +1,9 @@
 #pragma once
 #include "MDA.h"
 
+class IShootingAgent;
+typedef IShootingAgent * T;
+
 class IShootingAgent : public IAgent{
 public:
 	virtual void hit(IShootingAgent * object) = 0;
