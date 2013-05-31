@@ -1,4 +1,5 @@
 #include <DXLibCore.h>
+#include <MediaPath.h>
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT mes, WPARAM wParam, LPARAM lParam){
    if(mes == WM_DESTROY) {PostQuitMessage(0); return 0;}
