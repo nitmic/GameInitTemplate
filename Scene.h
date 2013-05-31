@@ -3,21 +3,37 @@
 #include <vector>
 #include "ShootingObject.h"
 
+class IScene;
+typedef IScene * NextScene;
+
 class IScene{
 public:
-	virtual IScene * step() = 0;
+	virtual NextScene step() = 0;
 	virtual void draw() = 0;
+
+
 };
 
 class ShootingScene : public IScene{
 public:
-	IScene * step();
+	NextScene step();
 	void draw();
 private:
-	std::vector<std::shared_ptr<IEnemy>> m_pEnemies;
-	std::vector<std::shared_ptr<IDrawer>> m_pDrawers;
-	std::vector<std::shared_ptr<OwnVehicle>> m_pPlayers;
-	std::vector<std::shared_ptr<IBullet>> m_pEnemyBullets;
-	std::vector<std::shared_ptr<IBullet>> m_pMyBullets;
+	typedef std::shared_ptr<OwnVehicle> Player;
+	typedef std::vector<Player> Players;
+	Players m_pPlayers;
+
+	typedef std::shared_ptr<IEnemy> Enemy;
+	typedef std::vector<Enemy> Enemies;
+	Enemies m_pEnemies;
+	
+	typedef std::shared_ptr<IDrawer> Drawer;
+	typedef std::vector<Drawer> Drawers;
+	Drawers m_pDrawers;
+	
+	typedef std::shared_ptr<IBullet> Bullet;
+	typedef std::vector<Bullet> Bullets;
+	Bullets m_pEnemyBullets;
+	Bullets m_pMyBullets;
 
 };

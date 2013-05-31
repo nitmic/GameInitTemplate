@@ -146,5 +146,5 @@ void drawing(T & p){
 
 template<class T>
 void drawing(std::vector<T> & v){
-	isVisibleOrErase(v, drawing_imp<T>);
+	isVisible(v, drawing_imp<T>);
 }
