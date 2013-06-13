@@ -8,7 +8,7 @@ void ShootingScene::draw(){
 }
 
 NextScene ShootingScene::step(){
-	if(!all_of(m_pPlayers.begin(), m_pPlayers.end(), isAlive<remove_pointer<Player>::type>)){
+	if(!std::all_of(m_pPlayers.begin(), m_pPlayers.end(), isAliveObject())){
 		return nullptr;
 	}
 

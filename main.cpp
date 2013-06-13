@@ -6,8 +6,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT mes, WPARAM wParam, LPARAM lParam){
    return DefWindowProc(hWnd, mes, wParam, lParam);
 }
 
-bool CALLBACK WindowProc(HWND hWnd, UINT msg, WPARAM w, LPARAM l)
-{
+bool CALLBACK WindowProc(HWND hWnd, UINT msg, WPARAM w, LPARAM l){
 	return false;
 }
 
