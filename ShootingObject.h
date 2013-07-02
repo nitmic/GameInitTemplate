@@ -1,6 +1,6 @@
 #pragma once
 #include "MDA.h"
-
+/*
 class IShootingAgent;
 typedef IShootingAgent * T;
 
@@ -38,4 +38,4 @@ public:
 	void step();
 private:
 	std::weak_ptr<Player> player;
-};
+};*/

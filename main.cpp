@@ -1,4 +1,9 @@
-#include <DXLib3D.h>
+#include "DXAdapter.h"
+#include "GameScene.h"
+#include <DX3DRendering.h>
+#include <DXRenderingEngineStorage.h>
+#include <DXDeviceObject.h>
+
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT mes, WPARAM wParam, LPARAM lParam){
    if(mes == WM_DESTROY) {PostQuitMessage(0); return 0;}
@@ -6,7 +11,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT mes, WPARAM wParam, LPARAM lParam){
 }
 
 bool CALLBACK WindowProc(HWND hWnd, UINT msg, WPARAM w, LPARAM l){
-	GetSingleton<DXLib::DXEditCamera>()->EditCameraProc(hWnd,msg,w,l);
+	//GetSingleton<DXLib::DXEditCamera>()->EditCameraProc(hWnd,msg,w,l);
 	return false;
 }
 
@@ -14,44 +19,29 @@ int APIENTRY _tWinMain(
 					   HINSTANCE hInstance, 
 					   HINSTANCE hPrevInstance, 
 					   LPTSTR	 lpCmdLine,
-					   int		 nCmdShow)
-{
-
-	//インスタンスの生成
-	auto pApp = GetSingleton<DXLib::DXApp>();
-	auto pWindow = GetSingleton<DXLib::DXWindow>();
-	//セットアップ
-	if(pApp->Setup(hInstance, 800, 600, true) == false){
-		return 0;
-	}
-	D3DXMATRIXA16    matWorld;      //ワールド行列
-	D3DXMATRIXA16    matPosition;   //移動行列
-	D3DXMatrixIdentity(&matWorld);  //初期化
-
-	//移動行列を作成
-	D3DXMatrixTranslation(
-		&matPosition,
-		0,  //X座標
-		0,  //Y座標
-		-10   //Z座標
-	);
-	matWorld *= matPosition;
+					   int		 nCmdShow
+){
 	
-	DXLib::DXMesh pencil;
-	if(FAILED(pencil.load(_T("house.x")))){
-		ERROR_MSG(_T("house.x 取得に失敗"));
+	DXLib::DXDeviceObject::getPathStorage().regist(_T("./space"));
+	//セットアップ
+	auto pApp = DXLib::DXInitialize<DXLib::DX3DRendering>(hInstance, 800, 600, true);
+	if(!pApp){
 		return 0;
 	}
+	auto pWindow = GetSingleton<DXLib::DXWindow>();
 
+
+	auto startScene = std::make_shared<GameScene>();
+	GameLoop gameLoop(startScene);
 
 	pApp->setOnFrameDraw([&]{
-		GetSingleton<DXLib::DXEditCamera>()->transform();
-		pencil.draw(matWorld);
-	});
-	pApp->setOnFrameUpdate([&]()->bool{
-		return true;
+		gameLoop.draw();
 	});
 
+	pApp->setOnFrameUpdate([&]()->bool{
+		return gameLoop.update();
+	});
+	
 	pWindow->setProc(&WindowProc);
 
 	//ウィンドウの表示
