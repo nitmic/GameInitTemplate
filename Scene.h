@@ -1,4 +1,5 @@
 #pragma once
+/*
 #include <memory>
 #include <vector>
 #include "ShootingObject.h"
@@ -36,4 +37,4 @@ private:
 	Bullets m_pEnemyBullets;
 	Bullets m_pMyBullets;
 
-};
+};*/

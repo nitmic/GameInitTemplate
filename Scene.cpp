@@ -1,3 +1,4 @@
+/*
 #include "Scene.h"
 #include "MDAUtility.hpp"
 #include "HitCheck.hpp"
@@ -22,4 +23,4 @@ NextScene ShootingScene::step(){
 	hitCheck(m_pPlayers, m_pEnemies);
 
 	return this;
-}
+}*/

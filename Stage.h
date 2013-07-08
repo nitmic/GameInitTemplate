@@ -5,7 +5,7 @@
 class Stage : public IDrawer{
 public:
 	Stage(){
-		m_drawer.setResouceName(_T("./space/back.x"));
+		m_drawer.setResouceName(_T("./space/background.x"));
 		Glas::Vector3f v;
 		std::fill(v.begin(),v.end(), 0);
 		m_drawer.setPosition(v);

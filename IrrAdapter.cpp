@@ -28,7 +28,7 @@ void IrrApp::setOnFrameDraw(std::function<void(void)> func){
 
 bool IrrApp::Setup(){
 	auto device_raw =irr::createDevice(
-		irr::video::EDT_OPENGL, irr::core::dimension2d<irr::u32>(800, 600), 16,
+		irr::video::EDT_OPENGL, irr::core::dimension2d<irr::u32>(800, 600), 32,
 		false, true, false, nullptr
 	);
 	if (!device_raw) return false;
@@ -47,7 +47,7 @@ namespace{
 };
 
 void IrrApp::AppLoop(){
-	auto fpsModerator = TUL::FPSModerator();
+	auto fpsModerator = TUL::FPSModerator(60);
 	auto lastFPS = -1;
 	auto driver = __impl__->device->getVideoDriver();
 	auto sm = __impl__->device->getSceneManager();
