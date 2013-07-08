@@ -1,28 +1,73 @@
 #pragma once
 #include "MDA.h"
-
+#include <Percentage.h>
+#include "GLAS.h"
 
 class Player;
 
-class Astronaut : public IAgent{
+
+class Air{
+public:
+	Air() : m_rest(1){};
+	bool isEmpty();
+private:
+	Percent m_rest;
+};
+
+class Life{
+public:
+	Life() : m_rest(1){};
+	bool isEmpty();
+private:
+	Percent m_rest;
+};
+
+struct JetPower{
+	JetPower(){
+		std::fill(direction.begin(), direction.end(), 0);
+		power = 0;
+	}
+	Glas::Vector2f direction;
+	float power;
+};
+
+
+class Astronaut : public I3DAgent{
 public:
 	bool isAlive();
+	
+	Glas::Vector3f getPosition();
+	Glas::Quaternion getAttitude(){return m_Attitude;};
+	
+	void jetPropellant(JetPower jetL, JetPower jetR);
+
 	void step();
+	//void move(Blas::Vector3f v);
+	Air getAir(){ return m_air;};
+	Life getLife(){ return m_life;}
 private:
-	float radius;
 	std::shared_ptr<Player> m_pModel;
+private:
+	Air m_air;
+	Life m_life;
+	Glas::Vector3f m_Pos;
+	Glas::Quaternion m_Attitude;
 };
+
+
 
 class AstronautDrawer : public IDrawer{
 public:
 	AstronautDrawer();
-	AstronautDrawer(std::shared_ptr<Player> model);
+	AstronautDrawer(std::shared_ptr<Astronaut> agent);
 	bool isVisible();
 	void draw();
 private:
 	struct Impl;
 	std::shared_ptr<Impl> __impl__;
 };
+
+
 
 class PlayerMeterDrawer : public IDrawer{
 public:

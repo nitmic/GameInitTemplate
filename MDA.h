@@ -1,4 +1,6 @@
 #pragma once
+#include "GLAS.h"
+
 class IModel{
 public:
 	virtual bool isValid() = 0;
@@ -16,7 +18,9 @@ public:
 	virtual void step() = 0;
 };
 
-class I3DModel : public IModel{
+
+class I3DAgent : public IAgent{
 public:
-	virtual Blas::Vector3f getPosition() = 0;
+	virtual Glas::Vector3<float> getPosition() = 0;
+	virtual Glas::Quaternion getAttitude() = 0;
 };

@@ -1,5 +1,5 @@
-#include "GameLoopDXAdapter.h"
-
+//#include "GameLoopDXAdapter.h"
+#include "GameLoop.h"
 #include "SceneHandler.h"
 
 namespace{
@@ -10,7 +10,7 @@ namespace{
 	}
 };
 
-namespace DXAdapter{
+//namespace DXAdapter{
 	struct GameLoop::Impl{
 		SceneHandler sceneHandler;
 	};
@@ -39,4 +39,4 @@ namespace DXAdapter{
 		}
 		__impl__->sceneHandler.getCurrentScene()->draw();
 	}
-};
+//};

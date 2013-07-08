@@ -1,11 +1,12 @@
 #pragma once
 #include <DXRenderingEngineStorage.h>
 #include <Singleton.hpp>
+#include "GLAS.h"
 
 namespace DXAdapter{
 	class Light{
 	public:
-		void setLightDirection(Blas::Vector3f d){
+		void setLightDirection(Glas::Vector3f d){
 			D3DXVECTOR4 x;
 			x[0] = d[0];
 			x[1] = d[1];
@@ -16,7 +17,7 @@ namespace DXAdapter{
 		void draw(){
 			GetSingleton<DXLib::DXRenderingEngineStorage>()->SetLightDirection(m_Direction);
 		}
-		void draw(Blas::Vector3f d){
+		void draw(Glas::Vector3f d){
 			setLightDirection(d);
 			draw();
 		}

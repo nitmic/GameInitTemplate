@@ -1,9 +1,12 @@
 #pragma once
-#include <memory>
-
 class IScene;
 
-namespace DXAdapter{
+/*
+*@class GameLoop
+*Å@àÀë∂Å@SceneHandler
+*/
+
+//namespace DXAdapter{
 	class GameLoop{
 	public:
 		GameLoop(std::shared_ptr<IScene> startScene);
@@ -13,4 +16,4 @@ namespace DXAdapter{
 		struct Impl;
 		std::shared_ptr<Impl> __impl__;
 	};
-};
+//};

@@ -1,56 +1,40 @@
-#include "DXAdapter.h"
+#include "IrrAdapter.h"
+#include <FPSModerator.h>
 #include "GameScene.h"
-#include <DX3DRendering.h>
-#include <DXRenderingEngineStorage.h>
-#include <DXDeviceObject.h>
+#include "GameLoop.h"
+#include <Singleton.hpp>
+#include <DXManager.h>
+#include <DXInput.h>
 
+#include "GLAS.h"
 
-LRESULT CALLBACK WndProc(HWND hWnd, UINT mes, WPARAM wParam, LPARAM lParam){
-   if(mes == WM_DESTROY) {PostQuitMessage(0); return 0;}
-   return DefWindowProc(hWnd, mes, wParam, lParam);
-}
-
-bool CALLBACK WindowProc(HWND hWnd, UINT msg, WPARAM w, LPARAM l){
-	//GetSingleton<DXLib::DXEditCamera>()->EditCameraProc(hWnd,msg,w,l);
-	return false;
-}
-
-int APIENTRY _tWinMain(
-					   HINSTANCE hInstance, 
-					   HINSTANCE hPrevInstance, 
-					   LPTSTR	 lpCmdLine,
-					   int		 nCmdShow
-){
+#ifdef WIN32
+int WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR strCmdLine, INT )
+#else
+int main()
+#endif
+{
+	auto app = GetSingleton<IrrApp>();
+	if(!app->Setup()) return 1;
+	auto hWnd = (HWND)app->accessVideoDriver()->getExposedVideoData().OpenGLWin32.HWnd;
 	
-	DXLib::DXDeviceObject::getPathStorage().regist(_T("./space"));
-	//セットアップ
-	auto pApp = DXLib::DXInitialize<DXLib::DX3DRendering>(hInstance, 800, 600, true);
-	if(!pApp){
-		return 0;
-	}
-	auto pWindow = GetSingleton<DXLib::DXWindow>();
+	//Joypad & sound用
+	if(!GetSingleton<DXLib::DXManager>()->Setup(hWnd, 800, 600, true)) return 1;
+	if(!GetSingleton<DXLib::DXInput>()->Setup(hInst, hWnd)) return 1;
 
 
 	auto startScene = std::make_shared<GameScene>();
 	GameLoop gameLoop(startScene);
-
-	pApp->setOnFrameDraw([&]{
+	
+	app->setOnFrameUpdate([&]()->bool{
+		GetSingleton<DXLib::DXInput>()->Update();
+		return gameLoop.update();
+	});
+	app->setOnFrameDraw([&](){
 		gameLoop.draw();
 	});
 
-	pApp->setOnFrameUpdate([&]()->bool{
-		return gameLoop.update();
-	});
-	
-	pWindow->setProc(&WindowProc);
-
-	//ウィンドウの表示
-	ShowWindow(pWindow->getHWND(), nCmdShow);
-
-
-	//メインループ
-	pApp->AppLoop();
-
+	app->AppLoop();
 
 	return 0;
 }

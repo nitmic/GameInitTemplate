@@ -8,17 +8,14 @@
 #include "Camera.h"
 #include "Stage.h"
 
-#include "CameraDXAdapter.hpp"
 #include "JoypadDXAdapter.h"
-#include "lightDXAdapter.h"
-
-using namespace DXAdapter;
+#include "lightIrrAdapter.h"
+#include "CameraIrrAdapter.hpp"
 
 
 struct GameScene::Impl{
 	Impl() : joypad(0){}
 	std::shared_ptr<Player> m_pPlayer; // model
-	std::shared_ptr<Player> m_pDebri; // model
 	std::shared_ptr<Astronaut> m_pAstronaut; // agent
 	Camera<TPSCamera> m_Camera;
 
@@ -40,19 +37,17 @@ struct GameScene::Impl{
 GameScene::GameScene(){
 	__impl__ = std::make_shared<Impl>();
 	__impl__->m_pPlayer = std::make_shared<Player>();
-	__impl__->m_pDrawers.push_back(std::make_shared<AstronautDrawer>(__impl__->m_pPlayer));
-
-	__impl__->m_pDebri = std::make_shared<Player>();
-	__impl__->m_pDrawers.push_back(std::make_shared<AstronautDrawer>(__impl__->m_pDebri));
+	__impl__->m_pAstronaut = std::make_shared<Astronaut>();
+	__impl__->m_pDrawers.push_back(std::make_shared<AstronautDrawer>(__impl__->m_pAstronaut));
 
 	__impl__->m_pStage = std::make_shared<Stage>();
 	__impl__->m_pDrawers.push_back(__impl__->m_pStage);
 	
-	__impl__->m_Camera.setTarget(__impl__->m_pPlayer);
+	__impl__->m_Camera.setTarget(__impl__->m_pAstronaut);
 }
 
 void GameScene::draw(){
-	__impl__->light.draw(__impl__->m_Camera.getLookAt() - __impl__->m_Camera.getPosition());
+	__impl__->light.draw();
 	__impl__->m_Camera.transform();
 	drawing(__impl__->m_pDrawers);
 }
@@ -60,26 +55,26 @@ void GameScene::draw(){
 void GameScene::step(
 	SceneHandler * sceneHandler
 ){
-	auto & j = __impl__->joypad;
+	/*auto & j = __impl__->joypad;
 	j.update();
 
 	auto & jLTilt = j.getLStick().getTilt();
 	JetPower jetL;
-	jetL.direction = Blas::normalize2(jLTilt);
+	jetL.direction = jLTilt.normalize();
 	jetL.power = 0;
 
 	auto & jRTilt = j.getRStick().getTilt();
 	JetPower jetR;
-	jetR.direction = Blas::normalize2(jRTilt);
+	jetR.direction = jRTilt.normalize();
 	jetR.power = 0;
 
 	if(j.getButton(AbsJoypad::L1).isPressed()){
-		jetL.power = Blas::norm_2(jLTilt);
+		jetL.power = jLTilt.getLength();
 	}else{
 		std::fill(jetL.direction.begin(), jetL.direction.end(), 0);
 	}
 	if(j.getButton(AbsJoypad::R1).isPressed()){
-		jetR.power = Blas::norm_2(jRTilt);
+		jetR.power = jRTilt.getLength();
 	}else{
 		std::fill(jetR.direction.begin(), jetR.direction.end(), 0);
 	}
@@ -88,8 +83,8 @@ void GameScene::step(
 	////////////////////////
 
 	if(j.getButton(AbsJoypad::L2).isPressed() && j.getButton(AbsJoypad::R2).isPressed()){
-		__impl__->m_Camera.setVirtical(__impl__->m_pPlayer->getVertical());
-		__impl__->m_Camera.setDirection(__impl__->m_pPlayer->getDirection());
+		//__impl__->m_Camera.setVirtical(__impl__->m_pPlayer->getVertical());
+		//__impl__->m_Camera.setDirection(__impl__->m_pPlayer->getDirection());
 	}
 	if(j.getButton(AbsJoypad::L2).isPressed() && !(j.getButton(AbsJoypad::R2).isPressed())){
 		__impl__->m_Camera.rotate(1);
@@ -108,10 +103,9 @@ void GameScene::step(
 	}
 
 	////////////////////
+	*/
+	__impl__->m_pStage->setPosition(__impl__->m_pAstronaut->getPosition());
 
-	__impl__->m_pStage->setPosition(__impl__->m_pPlayer->getPosition());
 
-
-	__impl__->m_Camera.step();
 	sceneHandler->setNextScene(sceneHandler->getCurrentScene());
 }

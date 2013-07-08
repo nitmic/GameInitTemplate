@@ -1,6 +1,6 @@
 #pragma once
 #include "MDA.h"
 
-class IDebri : public I3DModel, public IAgent{
+class IDebri : public IModel, public I3DAgent{
 
 };

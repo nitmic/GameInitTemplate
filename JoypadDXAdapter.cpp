@@ -3,6 +3,10 @@
 #include <DXJoypad.h>
 #include <DXStdafx.h>
 
+#pragma warning(disable:4482)
+#pragma warning(disable:4800)
+
+
 void DXAdapter::Joypad::update(){
 	auto pad = GetSingleton<DXLib::DXJoypad>();
 	setButton(DefaultButton::A,       pad->getButtonState(m_PlayerNum, DXLib::DXJoypad::A) & 0x80);

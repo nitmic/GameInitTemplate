@@ -1,7 +1,5 @@
 #pragma once
 #include "IScene.h"
-#include <vector>
-#include <map>
 #include <tString.h>
 
 class SceneHandler{
