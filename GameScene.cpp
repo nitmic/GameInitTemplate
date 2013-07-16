@@ -55,7 +55,7 @@ void GameScene::draw(){
 void GameScene::step(
 	SceneHandler * sceneHandler
 ){
-	/*auto & j = __impl__->joypad;
+	auto & j = __impl__->joypad;
 	j.update();
 
 	auto & jLTilt = j.getLStick().getTilt();
@@ -78,7 +78,7 @@ void GameScene::step(
 	}else{
 		std::fill(jetR.direction.begin(), jetR.direction.end(), 0);
 	}
-	__impl__->m_pPlayer->jetPropellant(jetL, jetR);
+	//__impl__->m_pPlayer->jetPropellant(jetL, jetR);
 	
 	////////////////////////
 
@@ -87,10 +87,11 @@ void GameScene::step(
 		//__impl__->m_Camera.setDirection(__impl__->m_pPlayer->getDirection());
 	}
 	if(j.getButton(AbsJoypad::L2).isPressed() && !(j.getButton(AbsJoypad::R2).isPressed())){
-		__impl__->m_Camera.rotate(1);
+		
+		//__impl__->m_Camera.rotate(1);
 	}
 	if(j.getButton(AbsJoypad::R2).isPressed() && !(j.getButton(AbsJoypad::L2).isPressed())){
-		__impl__->m_Camera.rotate(-1);
+		//__impl__->m_Camera.rotate(-1);
 	}
 
 	/////////////////////
@@ -103,7 +104,7 @@ void GameScene::step(
 	}
 
 	////////////////////
-	*/
+	
 	__impl__->m_pStage->setPosition(__impl__->m_pAstronaut->getPosition());
 
 

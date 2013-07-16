@@ -52,3 +52,4 @@ void TPSCamera::normalize(){
 }
 
 void TPSCamera::step(){}
+void TPSCamera::rotate(){}

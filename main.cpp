@@ -16,7 +16,7 @@ int main()
 {
 	auto app = GetSingleton<IrrApp>();
 	if(!app->Setup()) return 1;
-	auto hWnd = (HWND)app->accessVideoDriver()->getExposedVideoData().OpenGLWin32.HWnd;
+	auto hWnd = (HWND)app->accessVideoDriver()->getExposedVideoData().D3D9.HWnd;
 	
 	//Joypad & sound—p
 	if(!GetSingleton<DXLib::DXManager>()->Setup(hWnd, 800, 600, true)) return 1;
