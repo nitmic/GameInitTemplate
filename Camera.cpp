@@ -1,8 +1,9 @@
 #include "Camera.h"
 #include "MDA.h"
+#include <AngleUnit.h>
 
 struct TPSCamera::Impl{
-	Impl() : distance(4){};
+	Impl() : distance(4) {};
 	std::shared_ptr<I3DAgent> target;
 	Glas::Quaternion attitude;
 	float                   distance;
@@ -41,15 +42,23 @@ Glas::Quaternion TPSCamera::getAttitude() const{
 
 void TPSCamera::setAttitude(Glas::Quaternion & q){
 	__impl__->attitude = q;
+	__impl__->attitude.normalize();
 }
 
 void TPSCamera::setDistance(float d){
+	if(d>20) return;
+	if(d<2.5) return;
 	__impl__->distance = d;
 }
 
 void TPSCamera::normalize(){
-	setAttitude(Glas::Quaternion(0.5, 0, 0) * __impl__->target->getAttitude());
+	setAttitude(__impl__->target->getAttitude());
 }
 
 void TPSCamera::step(){}
-void TPSCamera::rotate(){}
+void TPSCamera::rotate(TUL::Degree deg, Glas::Vector3f v){
+	Glas::Quaternion attitude;
+	attitude.fromAngleAxis(deg, v.normalize());
+	attitude.normalize();
+	setAttitude(__impl__->attitude * attitude);
+}

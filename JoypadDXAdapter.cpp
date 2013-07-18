@@ -2,6 +2,8 @@
 #include <Singleton.hpp>
 #include <DXJoypad.h>
 #include <DXStdafx.h>
+#include <cmath>
+#include "Debug.h"
 
 #pragma warning(disable:4482)
 #pragma warning(disable:4800)
@@ -23,8 +25,27 @@ void DXAdapter::Joypad::update(){
 	setButton(DefaultButton::R1,   pad->getButtonState(m_PlayerNum, DXLib::DXJoypad::R1) & 0x80);
 	setButton(DefaultButton::L2,    pad->getButtonState(m_PlayerNum, DXLib::DXJoypad::L2) & 0x80);
 	setButton(DefaultButton::R2,   pad->getButtonState(m_PlayerNum, DXLib::DXJoypad::R2) & 0x80);
-	auto x = pad->getLAnalogStickState(m_PlayerNum);
-	setLStick(x.x / DXLib::DXJoypad::DX_PROP_MAX, x.y / DXLib::DXJoypad::DX_PROP_MAX);
+	auto x = pad->getLAnalogStickState(m_PlayerNum) / DXLib::DXJoypad::DX_PROP_MAX;
+	if(x.x==1){
+		x.x = std::sqrt(1  -  x.y * x.y);
+	}else if(x.y==1){
+		x.y = std::sqrt(1  -  x.x * x.x);
+	}else if(D3DXVec2Length(&x) > 1){
+		D3DXVec2Normalize(&x, &x);
+	}
+	setLStick(x.x, x.y);
 	auto y = pad->getRAnalogStickState(m_PlayerNum);
-	setRStick(y.x / DXLib::DXJoypad::DX_PROP_MAX, y.y / DXLib::DXJoypad::DX_PROP_MAX);
+	if(y.x==1){
+		y.x = std::sqrt(1  -  y.y * y.y);
+	}else if(y.y==1){
+		y.y = std::sqrt(1  -  y.x * y.x);
+	}else if(D3DXVec2Length(&y) > 1){
+		D3DXVec2Normalize(&y, &y);
+	}
+	/*
+	setRStick(y.x, y.y);
+	toStringStream ostr;
+	ostr << _T("key: ") << x.x << _T(", ") << x.y << _T(" : ") << getLStick().getTilt().X << _T(", ") << getLStick().getTilt().Y;
+	Debug(ostr.str());
+	*/
 }

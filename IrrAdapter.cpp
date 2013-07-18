@@ -51,13 +51,14 @@ void IrrApp::AppLoop(){
 	auto lastFPS = -1;
 	auto driver = __impl__->device->getVideoDriver();
 	auto sm = __impl__->device->getSceneManager();
+	auto env =  __impl__->device->getGUIEnvironment(); 
 
 	while(__impl__->device->run()){
 		//アクティブじゃなかったら処理しない
-		if(!__impl__->device->isWindowActive()){
+		/*if(!__impl__->device->isWindowActive()){
 			//ビジーループを回避するために
 			__impl__->device->yield(); 
-		}else if(fpsModerator.step()){
+		}else */if(fpsModerator.step()){
 			visibleReset(sm->getRootSceneNode());
 			sm->getRootSceneNode()->setVisible(true);
 
@@ -65,6 +66,7 @@ void IrrApp::AppLoop(){
 			__impl__->m_onFrameDraw();
 			driver->beginScene(true, true, irr::video::SColor(255,100,101,140));
 			sm->drawAll();
+			env->drawAll();
 			driver->endScene();
 		}else{
 			Sleep(1);
@@ -74,7 +76,7 @@ void IrrApp::AppLoop(){
 		if(lastFPS != fps){
 			toStringStream ostr;
 			ostr << _T("fps: ") << fps;
-			__impl__->device->setWindowCaption(ostr.str().c_str());
+			//__impl__->device->setWindowCaption(ostr.str().c_str());
 			lastFPS = fps;
 		}
 	}

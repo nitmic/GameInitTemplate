@@ -31,6 +31,7 @@ public:
 	void setDistance(float d);
 	void setAttitude(Glas::Quaternion & q);
 
+	void rotate(TUL::Degree deg, Glas::Vector3f v=Glas::Vector3f(0,1,0));
 	void normalize();
 
 	TPSCamera();

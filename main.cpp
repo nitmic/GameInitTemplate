@@ -6,6 +6,8 @@
 #include <DXManager.h>
 #include <DXInput.h>
 
+#include "JoypadDXAdapter.h"
+
 #include "GLAS.h"
 
 #ifdef WIN32
@@ -21,7 +23,6 @@ int main()
 	//Joypad & sound—p
 	if(!GetSingleton<DXLib::DXManager>()->Setup(hWnd, 800, 600, true)) return 1;
 	if(!GetSingleton<DXLib::DXInput>()->Setup(hInst, hWnd)) return 1;
-
 
 	auto startScene = std::make_shared<GameScene>();
 	GameLoop gameLoop(startScene);

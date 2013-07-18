@@ -27,7 +27,7 @@ struct JetPower{
 		std::fill(direction.begin(), direction.end(), 0);
 		power = 0;
 	}
-	Glas::Vector2f direction;
+	Glas::Vector3f direction;
 	float power;
 };
 
@@ -35,7 +35,7 @@ struct JetPower{
 class Astronaut : public I3DAgent{
 public:
 	bool isAlive();
-	
+	Astronaut() : m_Attitude(-1, -1, 1){};
 	Glas::Vector3f getPosition();
 	Glas::Quaternion getAttitude(){return m_Attitude;};
 	
@@ -48,6 +48,8 @@ public:
 private:
 	std::shared_ptr<Player> m_pModel;
 private:
+	Glas::Vector3f m_RotatePower;
+	Glas::Vector3f m_SufferPower;
 	Air m_air;
 	Life m_life;
 	Glas::Vector3f m_Pos;

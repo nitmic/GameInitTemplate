@@ -170,7 +170,8 @@ namespace Glas{
 		};
 
 		void toAngleAxis (TUL::Radian &angle, Vector3f& axis) const{
-			float x = angle.getRaw(); q.toAngleAxis(x, axis);
+			float x; q.toAngleAxis(x, axis);
+			angle = TUL::Radian(x); 
 		};
 
 		void toEuler(EulerAngle3r& euler) const{

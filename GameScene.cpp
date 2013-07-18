@@ -17,6 +17,7 @@ struct GameScene::Impl{
 	Impl() : joypad(0){}
 	std::shared_ptr<Player> m_pPlayer; // model
 	std::shared_ptr<Astronaut> m_pAstronaut; // agent
+	std::shared_ptr<Astronaut> m_pAstro;
 	Camera<TPSCamera> m_Camera;
 
 	typedef std::shared_ptr<IDebri> Debri;
@@ -29,7 +30,6 @@ struct GameScene::Impl{
 
 	std::shared_ptr<Stage> m_pStage;
 	
-	Light light;
 
 	Joypad joypad;
 };
@@ -40,6 +40,10 @@ GameScene::GameScene(){
 	__impl__->m_pAstronaut = std::make_shared<Astronaut>();
 	__impl__->m_pDrawers.push_back(std::make_shared<AstronautDrawer>(__impl__->m_pAstronaut));
 
+	auto deb = std::make_shared<Astronaut>();
+	__impl__->m_pAstro = deb;
+	__impl__->m_pDrawers.push_back(std::make_shared<AstronautDrawer>(deb));
+
 	__impl__->m_pStage = std::make_shared<Stage>();
 	__impl__->m_pDrawers.push_back(__impl__->m_pStage);
 	
@@ -47,7 +51,6 @@ GameScene::GameScene(){
 }
 
 void GameScene::draw(){
-	__impl__->light.draw();
 	__impl__->m_Camera.transform();
 	drawing(__impl__->m_pDrawers);
 }
@@ -57,56 +60,49 @@ void GameScene::step(
 ){
 	auto & j = __impl__->joypad;
 	j.update();
+	{
+		auto jLTilt = j.getLStick().getTilt();//.normalize(); // ŽÀ‘•ŠÔˆá‚Á‚Ä‚é‚©‚à
+		JetPower jetL;
+		jetL.direction.X = jLTilt.X;
+		auto length = jLTilt.getLength();
+		jetL.direction.Y = 1 - length;
+		jetL.direction.Z = -jLTilt.Y;
+		jetL.power = j.getButton(AbsJoypad::L1).isPressed() ? 0.001 : 0;
 
-	auto & jLTilt = j.getLStick().getTilt();
-	JetPower jetL;
-	jetL.direction = jLTilt.normalize();
-	jetL.power = 0;
+		auto jRTilt = j.getRStick().getTilt();
+		JetPower jetR;
+		jetR.direction.X = jRTilt.X;
+		jetR.direction.Y = 1 - jRTilt.getLength();
+		jetR.direction.Z = -jRTilt.Y;
+		jetR.power = j.getButton(AbsJoypad::R1).isPressed() ? 0.001 : 0;
 
-	auto & jRTilt = j.getRStick().getTilt();
-	JetPower jetR;
-	jetR.direction = jRTilt.normalize();
-	jetR.power = 0;
-
-	if(j.getButton(AbsJoypad::L1).isPressed()){
-		jetL.power = jLTilt.getLength();
-	}else{
-		std::fill(jetL.direction.begin(), jetL.direction.end(), 0);
+		__impl__->m_pAstronaut->jetPropellant(jetL, jetR);
 	}
-	if(j.getButton(AbsJoypad::R1).isPressed()){
-		jetR.power = jRTilt.getLength();
-	}else{
-		std::fill(jetR.direction.begin(), jetR.direction.end(), 0);
-	}
-	//__impl__->m_pPlayer->jetPropellant(jetL, jetR);
-	
+	__impl__->m_pAstronaut->step();
 	////////////////////////
 
 	if(j.getButton(AbsJoypad::L2).isPressed() && j.getButton(AbsJoypad::R2).isPressed()){
-		//__impl__->m_Camera.setVirtical(__impl__->m_pPlayer->getVertical());
-		//__impl__->m_Camera.setDirection(__impl__->m_pPlayer->getDirection());
+		__impl__->m_Camera.normalize();
 	}
 	if(j.getButton(AbsJoypad::L2).isPressed() && !(j.getButton(AbsJoypad::R2).isPressed())){
-		
-		//__impl__->m_Camera.rotate(1);
+		__impl__->m_Camera.rotate(3);
 	}
 	if(j.getButton(AbsJoypad::R2).isPressed() && !(j.getButton(AbsJoypad::L2).isPressed())){
-		//__impl__->m_Camera.rotate(-1);
+		__impl__->m_Camera.rotate(-3);
 	}
 
 	/////////////////////
 	
-	if(j.getButton(AbsJoypad::A).isJustPressed()){
-		__impl__->m_Camera.setDistance(__impl__->m_Camera.getDistance() * 1.5);
+	if(j.getButton(AbsJoypad::A).isPressed()){
+		__impl__->m_Camera.setDistance(__impl__->m_Camera.getDistance() * 1.05);
 	}
-	if(j.getButton(AbsJoypad::B).isJustPressed()){
-		__impl__->m_Camera.setDistance(__impl__->m_Camera.getDistance() / 1.5);
+	if(j.getButton(AbsJoypad::B).isPressed()){
+		__impl__->m_Camera.setDistance(__impl__->m_Camera.getDistance() / 1.05);
 	}
 
 	////////////////////
 	
 	__impl__->m_pStage->setPosition(__impl__->m_pAstronaut->getPosition());
-
 
 	sceneHandler->setNextScene(sceneHandler->getCurrentScene());
 }
