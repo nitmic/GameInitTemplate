@@ -62,5 +62,5 @@ void TPSCamera::rotate(TUL::Degree deg, Glas::Vector3f v){
 	Glas::Quaternion attitude;
 	attitude.fromAngleAxis(deg, v.normalize());
 	attitude.normalize();
-	setAttitude(__impl__->attitude * attitude);
+	setAttitude(attitude * __impl__->attitude);
 }

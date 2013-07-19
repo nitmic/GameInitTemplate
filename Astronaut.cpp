@@ -36,38 +36,41 @@ Glas::Vector3f Astronaut::getPosition(){
 }
 
 void Astronaut::jetPropellant(JetPower jetL, JetPower jetR){
-	auto l = jetL.direction*jetL.power;
-	l.X = 0;
-	auto r = jetR.direction*jetR.power;
-	r.X = 0;
-	
-	m_RotatePower += l - r;
-
-
-	
+	{
+		auto l = jetL.direction*jetL.power;
+		l.X = 0;
+		auto r = jetR.direction*jetR.power;
+		r.X = 0;
+		m_RotatePower += l - r;
+	}
+	{
+		auto l = jetL.direction*jetL.power*5;
+		auto r = jetR.direction*jetR.power*5;
+		m_SufferPower += l+r;
+	}
 }
 bool Astronaut::isAlive(){
 	return !(getAir().isEmpty() || getLife().isEmpty());
 }
 void Astronaut::step(){
-	Glas::Quaternion q;
+	// 制動装置
+	std::for_each(m_RotatePower.begin(), m_RotatePower.end(), [&](float & f){
+		if(f<-0.0001) f += 0.00003;
+		if(f>0.0001) f -= 0.00003;
+	});
+	// パワーを回転 移動エネルギーに
+	{
+		Glas::Quaternion q;
 
-	Glas::Vector3f defaultL(-1,0,0);
-	auto rotated = defaultL+m_RotatePower;
-	q.rotationFromTo(defaultL, rotated.normalize());
+		Glas::Vector3f defaultL(-1,0,0);
+		auto rotated = defaultL+m_RotatePower;
+		q.rotationFromTo(defaultL, rotated.normalize());
 
-	m_Attitude = q * m_Attitude;
-	m_Attitude.normalize();
+		m_Attitude = q * m_Attitude;
+		m_Attitude.normalize();
+	}
+	m_Pos += m_Attitude * m_SufferPower;
 
-	/*
-	TUL::Radian rad(0);
-	Glas::Vector3f axis;
-	m_Attitude.toAngleAxis(rad, axis);
-	
-	toStringStream ostr;
-	ostr << _T("key: ") << rad.getRaw() << _T(", ") << axis.X << _T(", ") << axis.Y << _T(", ") << axis.Z << _T(", ") ;
-	Debug(ostr.str());
-	*/
 }
 
 

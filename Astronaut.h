@@ -35,7 +35,7 @@ struct JetPower{
 class Astronaut : public I3DAgent{
 public:
 	bool isAlive();
-	Astronaut() : m_Attitude(-1, -1, 1){};
+	Astronaut() : m_Attitude(0,0,0){};
 	Glas::Vector3f getPosition();
 	Glas::Quaternion getAttitude(){return m_Attitude;};
 	

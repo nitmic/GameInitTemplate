@@ -25,6 +25,7 @@ void DXAdapter::Joypad::update(){
 	setButton(DefaultButton::R1,   pad->getButtonState(m_PlayerNum, DXLib::DXJoypad::R1) & 0x80);
 	setButton(DefaultButton::L2,    pad->getButtonState(m_PlayerNum, DXLib::DXJoypad::L2) & 0x80);
 	setButton(DefaultButton::R2,   pad->getButtonState(m_PlayerNum, DXLib::DXJoypad::R2) & 0x80);
+	// アナログスティックがいびつな形をしているため修正
 	auto x = pad->getLAnalogStickState(m_PlayerNum) / DXLib::DXJoypad::DX_PROP_MAX;
 	if(x.x==1){
 		x.x = std::sqrt(1  -  x.y * x.y);
@@ -42,10 +43,4 @@ void DXAdapter::Joypad::update(){
 	}else if(D3DXVec2Length(&y) > 1){
 		D3DXVec2Normalize(&y, &y);
 	}
-	/*
-	setRStick(y.x, y.y);
-	toStringStream ostr;
-	ostr << _T("key: ") << x.x << _T(", ") << x.y << _T(" : ") << getLStick().getTilt().X << _T(", ") << getLStick().getTilt().Y;
-	Debug(ostr.str());
-	*/
 }
