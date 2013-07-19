@@ -25,6 +25,7 @@ public:
 	void step();
 	Glas::Quaternion getAttitude() const;
 	Glas::Vector3f getPosition() const;
+	Glas::Vector3f getLookAt() const;
 	float getDistance() const;
 
 	void setTarget(const std::shared_ptr<I3DAgent> & target);

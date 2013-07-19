@@ -25,20 +25,10 @@ namespace IrrAdapter{
 			m_Node->setVisible(true);
 			m_Node->setPosition(getPosition());
 			
-			Glas::EulerAngle3r eular;
-			getAttitude().toEuler(eular);
-			auto v = Glas::Vector3f(
-				((TUL::Degree)(eular.X)).getRaw(),
-				((TUL::Degree)(eular.Y)).getRaw(),
-				((TUL::Degree)(eular.Z)).getRaw()
-			);
-			m_Node->setRotation(v);
+			m_Node->setTarget(getLookAt());
+			m_Node->setUpVector(getAttitude() * Glas::Vector3f(0,1,0));
+
 			m_Light->setVisible(true);
-
-			toStringStream ostr;
-			ostr << _T("key: ") << v.X << _T(", ") << v.Y << _T(", ") << v.Z;
-			Debug(ostr.str());
-
 		}
 	private:
 		irr::scene::ILightSceneNode * m_Light;

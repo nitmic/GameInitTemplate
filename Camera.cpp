@@ -26,11 +26,13 @@ void TPSCamera::setTarget(const std::shared_ptr<I3DAgent> & target){
 
 
 Glas::Vector3f TPSCamera::getPosition() const{
-	auto p = __impl__->target->getPosition();
 	auto direction = __impl__->attitude * Glas::Vector3f(0,0,1);
-	return p - direction.normalize() * __impl__->distance;
+	return getLookAt() - direction.normalize() * __impl__->distance;
 }
 
+Glas::Vector3f TPSCamera::getLookAt() const{
+	return __impl__->target->getPosition();
+}
 
 float TPSCamera::getDistance() const{
 	return __impl__->distance;

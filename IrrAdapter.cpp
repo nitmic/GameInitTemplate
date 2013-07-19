@@ -28,7 +28,7 @@ void IrrApp::setOnFrameDraw(std::function<void(void)> func){
 
 bool IrrApp::Setup(){
 	auto device_raw =irr::createDevice(
-		irr::video::EDT_DIRECT3D9, irr::core::dimension2d<irr::u32>(800, 600), 32,
+		irr::video::EDT_OPENGL, irr::core::dimension2d<irr::u32>(800, 600), 32,
 		false, true, false, nullptr
 	);
 	if (!device_raw) return false;
