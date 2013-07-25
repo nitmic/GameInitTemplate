@@ -1,7 +1,86 @@
 #include "Astronaut.h"
 #include "Player.h"
 #include "3DObjectIrrAdapter.h"
-#include "Debug.h"
+#include "Jet.h"
+
+
+/*
+*@class Astronaut
+*/
+
+struct Astronaut::Impl{
+	Impl()  : m_Attitude(0,0,0){};
+
+	Air m_air;
+	Life m_life;
+	Glas::Vector3f m_Pos;
+	Glas::Quaternion m_Attitude;
+	std::shared_ptr<Player> m_pModel;
+};
+
+Glas::Quaternion Astronaut::getAttitude(){
+	return __impl__->m_Attitude;
+};
+
+
+Glas::Vector3f Astronaut::getPosition(){
+	return __impl__->m_Pos;
+}
+
+void Astronaut::thrust(
+	const std::shared_ptr<JetAgent> & jetL,
+	const std::shared_ptr<JetAgent> & jetR
+){
+	{
+		auto l = jetL->getPropellant();
+		l.X = 0;
+		auto r = jetR->getPropellant();
+		r.X = 0;
+		m_RotatePower += l-r;
+	}
+	{
+		Glas::Vector3f power = jetL->getPropellant() + jetR->getPropellant();
+		m_SufferPower += m_Attitude * power;
+	}
+}
+
+bool Astronaut::isAlive(){
+	return !(getAir().isEmpty() || getLife().isEmpty());
+}
+
+void Astronaut::step(){
+	// 制動装置
+	std::for_each(m_RotatePower.begin(), m_RotatePower.end(), [&](float & f){
+		if(f<-0.0001) f += 0.0001;
+		if(f>0.0001) f -= 0.0001;
+	});
+	std::for_each(m_SufferPower.begin(), m_SufferPower.end(), [&](float & f){
+		if(f<-0.0001) f += 0.0001;
+		if(f>0.0001) f -= 0.0001;
+	});
+	// パワーを回転 移動エネルギーに
+	{
+		Glas::Quaternion q;
+
+		Glas::Vector3f defaultL(-1,0,0);
+		auto rotated = defaultL+m_RotatePower;
+		q.rotationFromTo(defaultL, rotated.normalize());
+
+		m_Attitude = q * m_Attitude;
+		m_Attitude.normalize();
+	}
+	m_Pos += m_SufferPower;
+
+}
+
+Air Astronaut::getAir(){ return __impl__->m_air;};
+Life Astronaut::getLife(){ return __impl__->m_life;}
+
+
+
+/*
+*@class AstronautDrawer
+*/
 
 struct AstronautDrawer::Impl{
 	Drawer3DImpl m_drawer;
@@ -31,49 +110,7 @@ void AstronautDrawer::draw(){
 
 
 
-Glas::Vector3f Astronaut::getPosition(){
-	return m_Pos;
-}
-
-void Astronaut::jetPropellant(JetPower jetL, JetPower jetR){
-	{
-		auto l = jetL.direction*jetL.power;
-		l.X = 0;
-		auto r = jetR.direction*jetR.power;
-		r.X = 0;
-		m_RotatePower += l - r;
-	}
-	{
-		auto l = jetL.direction*jetL.power*5;
-		auto r = jetR.direction*jetR.power*5;
-		m_SufferPower += l+r;
-	}
-}
-bool Astronaut::isAlive(){
-	return !(getAir().isEmpty() || getLife().isEmpty());
-}
-void Astronaut::step(){
-	// 制動装置
-	std::for_each(m_RotatePower.begin(), m_RotatePower.end(), [&](float & f){
-		if(f<-0.0001) f += 0.00003;
-		if(f>0.0001) f -= 0.00003;
-	});
-	// パワーを回転 移動エネルギーに
-	{
-		Glas::Quaternion q;
-
-		Glas::Vector3f defaultL(-1,0,0);
-		auto rotated = defaultL+m_RotatePower;
-		q.rotationFromTo(defaultL, rotated.normalize());
-
-		m_Attitude = q * m_Attitude;
-		m_Attitude.normalize();
-	}
-	m_Pos += m_Attitude * m_SufferPower;
-
-}
-
-
+////////////////////////      other       ///////////////////////
 
 
 bool Air::isEmpty(){
