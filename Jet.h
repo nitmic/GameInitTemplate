@@ -10,7 +10,7 @@
 
 class JetAgent : public I3DAgent{
 public:
-	JetAgent(){};
+	JetAgent();
 	bool isAlive();
 	void step(){};
 	void thrust(Glas::Vector3f direction);
@@ -44,7 +44,7 @@ private:
 
 class RCSAgent : public I3DAgent{
 public:
-	RCSAgent(){};
+	RCSAgent();
 	bool isAlive();
 	void step();
 	
@@ -54,6 +54,7 @@ public:
 	);
 	void rolling(Glas::Vector3f direction);
 
+	Glas::Quaternion getRolling();
 	Glas::Quaternion getAttitude();
 	Glas::Vector3f getPosition();
 private:

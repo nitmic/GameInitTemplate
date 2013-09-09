@@ -7,17 +7,21 @@
 class Air;
 class Life;
 class JetAgent;
+class RCSAgent;
+class Player;
 
 class Astronaut : public I3DAgent{
 public:
 	bool isAlive();
-	Astronaut(){};
+	Astronaut();
+	Astronaut(std::shared_ptr<Player> & pModel);
 	Glas::Vector3f getPosition();
 	Glas::Quaternion getAttitude();
 	
 	void thrust(
 		const std::shared_ptr<JetAgent> & jetL,
-		const std::shared_ptr<JetAgent> & jetR
+		const std::shared_ptr<JetAgent> & jetR,
+		const std::shared_ptr<RCSAgent> & jetRCS
 	);
 
 	void step();
@@ -39,7 +43,6 @@ private:
 	std::shared_ptr<Impl> __impl__;
 };
 
-class Player;
 
 class PlayerMeterDrawer : public IDrawer{
 public:

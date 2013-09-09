@@ -9,27 +9,34 @@
 */
 
 struct JetAgent::Impl{
+	Impl(){}
+
 	std::shared_ptr<I3DAgent> m_Agent;
 	Glas::Vector3f m_Offset;
-	bool isBurst;
 
 	Glas::Vector3f direction;
-	float power;
+};
+
+JetAgent::JetAgent(){
+	__impl__ = std::make_shared<Impl>();
 };
 
 bool JetAgent::isAlive(){
-	return __impl__->power>0;
+	return __impl__->direction.getLength()>0;
 }
+
 void JetAgent::thrust(Glas::Vector3f direction){
 	__impl__->direction = direction;
 }
+
 void JetAgent::Join(
 	std::shared_ptr<I3DAgent> agent,
-	Glas::Vector3f offset=Glas::Vector3f(0,0,0)
+	Glas::Vector3f offset
 ){
 	__impl__->m_Agent = agent;
 	__impl__->m_Offset = offset;
 }
+
 Glas::Quaternion JetAgent::getAttitude(){
 	Glas::Quaternion q;
 	Glas::Vector3f from(0,1,0);
@@ -38,9 +45,11 @@ Glas::Quaternion JetAgent::getAttitude(){
 	q.normalize();
 	return q;
 }
+
 Glas::Vector3f JetAgent::getPropellant(){
-	return __impl__->direction * __impl__->power;
+	return __impl__->direction;
 }
+
 Glas::Vector3f JetAgent::getPosition(){
 	return (
 		__impl__->m_Agent->getPosition()
@@ -61,6 +70,7 @@ struct JetDrawer::Impl{
 
 JetDrawer::JetDrawer(){
 	__impl__ = std::make_shared<Impl>();
+	__impl__->m_Jet.stop();
 }
 
 JetDrawer::JetDrawer(std::shared_ptr<JetAgent> & agent){
@@ -94,20 +104,25 @@ bool JetDrawer::isVisible(){
 struct RCSAgent::Impl{
 	std::shared_ptr<I3DAgent> m_Agent;
 	Glas::Vector3f m_Offset;
-
-	Glas::Vector3f rollingDirection;
-	bool isBurst;
+	
+	Glas::Vector3f direction;
+	Glas::Quaternion rolling;
 };
 
-void RCSAgent::step(){};
+RCSAgent::RCSAgent(){
+	__impl__ = std::make_shared<Impl>();
+};
+void RCSAgent::step(){
+	
+};
 
 bool RCSAgent::isAlive(){
-	return __impl__->isBurst;
+	return __impl__->direction.getLength()>0;
 };
 
-void JetAgent::Join(
+void RCSAgent::Join(
 	std::shared_ptr<I3DAgent> agent,
-	Glas::Vector3f offset=Glas::Vector3f(0,0,0)
+	Glas::Vector3f offset
 ){
 	__impl__->m_Agent = agent;
 	__impl__->m_Offset = offset;
@@ -115,6 +130,16 @@ void JetAgent::Join(
 
 void RCSAgent::rolling(Glas::Vector3f direction){
 	// 0‚È‚çŒ»Ý‚Ì‘¬“x‚ð‹}‘¬‚É—Ž‚Æ‚·
+	__impl__->direction = direction.getLength()==0 ? __impl__->direction*0.9 : direction;
+	
+	Glas::Vector3f defaultL(0, 1, 0);
+	auto rotated = defaultL+__impl__->direction;
+	__impl__->rolling.rotationFromTo(defaultL, rotated.normalize());
+}
+
+Glas::Quaternion RCSAgent::getRolling(){
+
+	return __impl__->rolling;
 }
 
 Glas::Quaternion RCSAgent::getAttitude(){
@@ -134,9 +159,9 @@ struct RCSDrawer::Impl{
 	std::shared_ptr<RCSAgent> m_pAgent;
 };
 
-
 RCSDrawer::RCSDrawer(){
 	__impl__ = std::make_shared<Impl>();
+	__impl__->m_Jet.stop();
 }
 
 RCSDrawer::RCSDrawer(std::shared_ptr<RCSAgent> & agent){

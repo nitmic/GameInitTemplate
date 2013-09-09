@@ -11,10 +11,10 @@ public:
 		Glas::Vector3f v;
 		std::fill(v.begin(),v.end(), 0);
 		m_drawer.setPosition(v);
-		m_drawer.setScale(30);
+		m_drawer.setScale(500);
 
-		m_Earth.setPosition(v + Glas::Vector3f(0,0,40));
-		m_Earth.setScale(10);
+		m_Earth.setPosition(v + Glas::Vector3f(0,0,2500));
+		m_Earth.setScale(400);
 
 	}
 	bool isVisible(){return true;};
@@ -24,7 +24,7 @@ public:
 	};
 	void setPosition(Glas::Vector3f v){
 		m_drawer.setPosition(v);
-		m_Earth.setPosition(v + Glas::Vector3f(0,0,40));
+		m_Earth.setPosition(v + Glas::Vector3f(0,0,2500));
 	}
 private:
 	Drawer3DImpl m_drawer;

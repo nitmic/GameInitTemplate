@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{2B3C195A-2BDB-4A15-9269-21FA2E6FD817}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>GameInitTemplate</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\irrlicht-1.8\include;$(DXSDK_DIR)Include;C:\Boost\boost_1_53_0;../TUL;../DXLibCore;../DXLib3D</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile>boostpre.h</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>boostpre.h</ForcedIncludeFiles>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\irrlicht-1.8\lib\Win32-visualStudio;$(DXSDK_DIR)Lib\x86;C:\Boost\boost_1_53_0\lib</AdditionalLibraryDirectories>
+      <ForceFileOutput>MultiplyDefinedSymbolOnly</ForceFileOutput>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="3DObjectDXAdapter.h" />
+    <ClInclude Include="3DObjectIrrAdapter.h" />
+    <ClInclude Include="AnalogStick.h" />
+    <ClInclude Include="AsteroidBelt.h" />
+    <ClInclude Include="Astronaut.h" />
+    <ClInclude Include="boostpre.h" />
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="CameraDXAdapter.hpp" />
+    <ClInclude Include="CameraIrrAdapter.hpp" />
+    <ClInclude Include="Debug.h" />
+    <ClInclude Include="GameLoop.h" />
+    <ClInclude Include="GLAS.h" />
+    <ClInclude Include="IDebris.h" />
+    <ClInclude Include="DXAdapter.h" />
+    <ClInclude Include="GameScene.h" />
+    <ClInclude Include="HitCheck.hpp" />
+    <ClInclude Include="IrrAdapter.h" />
+    <ClInclude Include="Jet.h" />
+    <ClInclude Include="Joypad.h" />
+    <ClInclude Include="JoypadDXAdapter.h" />
+    <ClInclude Include="lightDXAdapter.h" />
+    <ClInclude Include="lightIrrAdapter.h" />
+    <ClInclude Include="MDA.h" />
+    <ClInclude Include="MDAUtility.hpp" />
+    <ClInclude Include="ParticleIrrAdapter.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="IScene.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneHandler.h" />
+    <ClInclude Include="ShootingObject.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="Stage.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="3DObjectDXAdapter.cpp" />
+    <ClCompile Include="3DObjectIrrAdapter.cpp" />
+    <ClCompile Include="AnalogStick.cpp" />
+    <ClCompile Include="Astronaut.cpp" />
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="GameLoop.cpp" />
+    <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="IDebris.cpp" />
+    <ClCompile Include="IrrAdapter.cpp" />
+    <ClCompile Include="Jet.cpp" />
+    <ClCompile Include="Joypad.cpp" />
+    <ClCompile Include="JoypadDXAdapter.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="IScene.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneHandler.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DXLib3D\DXLib3D.vcxproj">
+      <Project>{4935d066-7a48-4c81-9df9-37f19a152301}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\DXLibCore\DXLibCore.vcxproj">
+      <Project>{b16c9ee8-7970-415c-b866-c4852d9544d4}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\TUL\TUL.vcxproj">
+      <Project>{dd08797b-e625-4330-ae38-5ed474debe08}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

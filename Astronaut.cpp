@@ -16,11 +16,22 @@ struct Astronaut::Impl{
 	Glas::Vector3f m_Pos;
 	Glas::Quaternion m_Attitude;
 	std::shared_ptr<Player> m_pModel;
+	Glas::Vector3f m_RotatePower;
+	Glas::Vector3f m_SufferPower;
 };
+
+Astronaut::Astronaut(){
+	__impl__ = std::make_shared<Impl>();
+}
+
+Astronaut::Astronaut(std::shared_ptr<Player> & pModel){
+	__impl__ = std::make_shared<Impl>();
+	__impl__->m_pModel = pModel;
+}
 
 Glas::Quaternion Astronaut::getAttitude(){
 	return __impl__->m_Attitude;
-};
+}
 
 
 Glas::Vector3f Astronaut::getPosition(){
@@ -29,19 +40,35 @@ Glas::Vector3f Astronaut::getPosition(){
 
 void Astronaut::thrust(
 	const std::shared_ptr<JetAgent> & jetL,
-	const std::shared_ptr<JetAgent> & jetR
+	const std::shared_ptr<JetAgent> & jetR,
+	const std::shared_ptr<RCSAgent> & jetRCS
 ){
-	{
-		auto l = jetL->getPropellant();
+	__impl__->m_Attitude = jetRCS->getRolling() * __impl__->m_Attitude;
+	__impl__->m_Attitude.normalize();
+
+	auto l = jetL->getPropellant();
+	auto r = jetR->getPropellant();
+	if(l.getLength()+r.getLength()>0){
+		if(l.getLength()*r.getLength()>0){
+			__impl__->m_RotatePower *= 0.9;
+			// どちらも出力あり
+			Glas::Vector3f power = jetL->getPropellant() + jetR->getPropellant();
+			__impl__->m_SufferPower += power;
+			__impl__->m_RotatePower *= 0.97;
+			if(__impl__->m_SufferPower.getLength()>3){
+				__impl__->m_SufferPower.normalize();
+				__impl__->m_SufferPower *= 3;
+			}
+			return;
+		}
+		// どちらかのみが出力あり
 		l.X = 0;
-		auto r = jetR->getPropellant();
 		r.X = 0;
-		m_RotatePower += l-r;
+		__impl__->m_RotatePower += l-r;
+		return;
 	}
-	{
-		Glas::Vector3f power = jetL->getPropellant() + jetR->getPropellant();
-		m_SufferPower += m_Attitude * power;
-	}
+	__impl__->m_RotatePower *= 0.9;
+	__impl__->m_SufferPower *= 0.9;
 }
 
 bool Astronaut::isAlive(){
@@ -49,27 +76,18 @@ bool Astronaut::isAlive(){
 }
 
 void Astronaut::step(){
-	// 制動装置
-	std::for_each(m_RotatePower.begin(), m_RotatePower.end(), [&](float & f){
-		if(f<-0.0001) f += 0.0001;
-		if(f>0.0001) f -= 0.0001;
-	});
-	std::for_each(m_SufferPower.begin(), m_SufferPower.end(), [&](float & f){
-		if(f<-0.0001) f += 0.0001;
-		if(f>0.0001) f -= 0.0001;
-	});
 	// パワーを回転 移動エネルギーに
 	{
 		Glas::Quaternion q;
 
 		Glas::Vector3f defaultL(-1,0,0);
-		auto rotated = defaultL+m_RotatePower;
+		auto rotated = defaultL+__impl__->m_RotatePower;
 		q.rotationFromTo(defaultL, rotated.normalize());
 
-		m_Attitude = q * m_Attitude;
-		m_Attitude.normalize();
+		__impl__->m_Attitude = q * __impl__->m_Attitude;
+		__impl__->m_Attitude.normalize();
 	}
-	m_Pos += m_SufferPower;
+	__impl__->m_Pos += __impl__->m_Attitude * __impl__->m_SufferPower;
 
 }
 

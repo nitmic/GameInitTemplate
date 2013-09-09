@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Scene">
+      <UniqueIdentifier>{b4109295-e958-4d85-bb27-eb3fa0c5fdcd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\GameObject">
+      <UniqueIdentifier>{51735241-9378-4d98-a1c7-fb97f3284c69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene">
+      <UniqueIdentifier>{4e518c77-eb98-4d1e-b70a-21fd44dc1c50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Adapter">
+      <UniqueIdentifier>{042314db-dd96-4a7f-aa03-60cc2da8e7eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Adapter">
+      <UniqueIdentifier>{bfcb7fd4-85f4-4e7b-b7a6-2b38c9695928}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Adapter\DXAdapter">
+      <UniqueIdentifier>{7e0bfb43-d18b-488b-b6bf-52f777b0e51c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Adapter\DXAdapter">
+      <UniqueIdentifier>{8e4ae97e-a2b3-4020-b025-8aa0f00c6a2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject">
+      <UniqueIdentifier>{08601159-f4f7-40cc-8bbd-b368a330c640}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\GameObject\Player">
+      <UniqueIdentifier>{3f7e7961-254e-499a-aec7-a06569683ecc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject\Player">
+      <UniqueIdentifier>{66d30d82-60ec-4dc3-ac43-6fc22570d306}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\GameObject\Debris">
+      <UniqueIdentifier>{ac9dce1c-1c58-410d-b5dc-01add6c730db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject\Debris">
+      <UniqueIdentifier>{07ef4b3d-b554-40bb-be63-0b4b79aa1945}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Joypad">
+      <UniqueIdentifier>{d6a8c000-174b-4be7-8d32-b212ebdb9fc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Joypad">
+      <UniqueIdentifier>{b5741126-cbda-4b16-bc6a-4716093547bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Adapter\IrrAdapter">
+      <UniqueIdentifier>{cbc0f25d-8488-4f57-b998-2eb7d78dda98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Adapter\IrrAdapter">
+      <UniqueIdentifier>{5b910d47-25d8-4170-90b3-01430f66e44d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="HitCheck.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="MDAUtility.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraDXAdapter.hpp">
+      <Filter>ヘッダー ファイル\Adapter\DXAdapter</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneHandler.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="IScene.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="ShootingObject.h">
+      <Filter>ヘッダー ファイル\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="MDA.h">
+      <Filter>ヘッダー ファイル\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="DXAdapter.h">
+      <Filter>ヘッダー ファイル\Adapter</Filter>
+    </ClInclude>
+    <ClInclude Include="Astronaut.h">
+      <Filter>ヘッダー ファイル\GameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>ヘッダー ファイル\GameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="IDebris.h">
+      <Filter>ヘッダー ファイル\GameObject\Debris</Filter>
+    </ClInclude>
+    <ClInclude Include="3DObjectDXAdapter.h">
+      <Filter>ヘッダー ファイル\Adapter\DXAdapter</Filter>
+    </ClInclude>
+    <ClInclude Include="JoypadDXAdapter.h">
+      <Filter>ヘッダー ファイル\Adapter\DXAdapter</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>ヘッダー ファイル\Joypad</Filter>
+    </ClInclude>
+    <ClInclude Include="Joypad.h">
+      <Filter>ヘッダー ファイル\Joypad</Filter>
+    </ClInclude>
+    <ClInclude Include="AnalogStick.h">
+      <Filter>ヘッダー ファイル\Joypad</Filter>
+    </ClInclude>
+    <ClInclude Include="boostpre.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage.h">
+      <Filter>ヘッダー ファイル\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="lightDXAdapter.h">
+      <Filter>ヘッダー ファイル\Adapter\DXAdapter</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLoop.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GLAS.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="IrrAdapter.h">
+      <Filter>ヘッダー ファイル\Adapter</Filter>
+    </ClInclude>
+    <ClInclude Include="lightIrrAdapter.h">
+      <Filter>ヘッダー ファイル\Adapter\IrrAdapter</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraIrrAdapter.hpp">
+      <Filter>ヘッダー ファイル\Adapter\IrrAdapter</Filter>
+    </ClInclude>
+    <ClInclude Include="3DObjectIrrAdapter.h">
+      <Filter>ヘッダー ファイル\Adapter\IrrAdapter</Filter>
+    </ClInclude>
+    <ClInclude Include="Debug.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleIrrAdapter.h">
+      <Filter>ヘッダー ファイル\Adapter\IrrAdapter</Filter>
+    </ClInclude>
+    <ClInclude Include="Jet.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="AsteroidBelt.h">
+      <Filter>ヘッダー ファイル\GameObject</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="IScene.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneHandler.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>ソース ファイル\GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Astronaut.cpp">
+      <Filter>ソース ファイル\GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="3DObjectDXAdapter.cpp">
+      <Filter>ソース ファイル\Adapter\DXAdapter</Filter>
+    </ClCompile>
+    <ClCompile Include="JoypadDXAdapter.cpp">
+      <Filter>ソース ファイル\Adapter\DXAdapter</Filter>
+    </ClCompile>
+    <ClCompile Include="Joypad.cpp">
+      <Filter>ソース ファイル\Joypad</Filter>
+    </ClCompile>
+    <ClCompile Include="AnalogStick.cpp">
+      <Filter>ソース ファイル\Joypad</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>ソース ファイル\Joypad</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLoop.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="IrrAdapter.cpp">
+      <Filter>ソース ファイル\Adapter</Filter>
+    </ClCompile>
+    <ClCompile Include="3DObjectIrrAdapter.cpp">
+      <Filter>ソース ファイル\Adapter\IrrAdapter</Filter>
+    </ClCompile>
+    <ClCompile Include="Jet.cpp">
+      <Filter>ソース ファイル\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="IDebris.cpp">
+      <Filter>ソース ファイル\GameObject\Debris</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
